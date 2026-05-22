@@ -53,7 +53,7 @@
 
   set par(
     leading: 1em,
-    first-line-indent: (amount: 2em, all: true),
+    first-line-indent: (amount: 2em, ..if lang == "zh" { (all: true) }),
     spacing: 1.5em,
     justify: true,
   )
@@ -84,6 +84,7 @@
   }
 
   set heading(numbering: heading-numbering)
+  show heading.where(level: 1): set heading(supplement: none)
 
   // Level 1: Chapter
   show heading.where(level: 1): it => {
