@@ -63,17 +63,17 @@
   //   zh: 第一章 / 一、 / （一） / 1. / (1)
   //   en: Chapter 1 / 1.1 / 1.1.1 / 1.1.1.1
   // This numbering function is also used by outline() for ToC entries.
-  let heading-numbering = if lang == "zh" {
+  set heading(numbering: if lang == "zh" {
     (..nums) => {
       let n = nums.pos()
       if n.len() == 1 {
-        [第#numbering("一", n.at(0))章]
+        numbering("第一章", n.at(0))
       } else if n.len() == 2 {
-        [#numbering("一", n.at(1))、]
+        numbering("一、", n.at(1))
       } else if n.len() == 3 {
-        [（#numbering("一", n.at(2))）]
+        numbering("（一）", n.at(2))
       } else if n.len() >= 4 {
-        [#numbering("1.", n.at(3))]
+        numbering("1.", n.at(3))
       }
     }
   } else {
@@ -81,12 +81,10 @@
       let n = nums.pos()
       if n.len() == 1 { [Chapter #n.at(0)] } else { numbering("1.1", ..n) }
     }
-  }
-
-  set heading(numbering: heading-numbering)
-  show heading.where(level: 1): set heading(supplement: none)
+  })
 
   // Level 1: Chapter
+  show heading.where(level: 1): set heading(supplement: none)
   show heading.where(level: 1): it => {
     // Reset figure / table / equation counters per chapter
     counter(figure.where(kind: image)).update(0)
