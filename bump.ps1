@@ -2,7 +2,7 @@ param (
 	[Parameter(Mandatory)]
 	[string]$newTag
 )
-$ErrorActionPreference='Stop'
+$ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
 
 $newTag = $newTag.TrimStart('v')
@@ -16,5 +16,8 @@ $files = @(
 foreach ($f in $files) {
 	(Get-Content $f -Raw) -replace $tag, $newTag | Out-File $f -NoNewline
 }
+
+New-Item $env:APPDATA\typst\packages\preview\ntust-thesis-unofficial\$newTag `
+	-ItemType SymbolicLink -Value $PSScriptRoot
 
 Pop-Location

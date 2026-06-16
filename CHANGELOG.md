@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0]
+
+- Improve reference formatting.
+
 ## [1.0.2]
 
 - Remove supplement on level 1 heading.

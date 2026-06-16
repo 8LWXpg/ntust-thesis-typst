@@ -61,7 +61,7 @@
   // Heading configuration
   // Language-dependent heading numbering:
   //   zh: 第一章 / 一、 / （一） / 1. / (1)
-  //   en: Chapter 1 / 1.1 / 1.1.1 / 1.1.1.1
+  //   en: Chapter 1 / 1. / 1.1. / 1.1.1 / 1.1.1.1
   // This numbering function is also used by outline() for ToC entries.
   set heading(numbering: if lang == "zh" {
     (..nums) => {
@@ -72,16 +72,53 @@
         numbering("一、", n.at(1))
       } else if n.len() == 3 {
         numbering("（一）", n.at(2))
-      } else if n.len() >= 4 {
+      } else if n.len() == 4 {
         numbering("1.", n.at(3))
+      } else if n.len() >= 5 {
+        numbering("(1)", n.at(4))
       }
     }
   } else {
     (..nums) => {
       let n = nums.pos()
-      if n.len() == 1 { [Chapter #n.at(0)] } else { numbering("1.1", ..n) }
+      if n.len() == 1 {
+        [Chapter #numbering("1", n.at(0))]
+      } else {
+        numbering("1.", ..n.slice(1))
+      }
     }
   })
+
+  // Reference configuration
+  show ref: it => {
+    let el = it.element
+    if el == none or el.func() != heading { return it }
+    if el.level == 1 { return it }
+    let num = (..nums) => if lang == "zh" {
+      let n = nums.pos()
+      if n.len() == 1 {
+        numbering("第一章", ..n)
+      } else if n.len() == 2 {
+        numbering("第一章第一節", ..n)
+      } else if n.len() >= 3 {
+        // Give up on h4 and lower for it's too long
+        numbering("第一章第一節之（一）", ..n)
+      }
+    } else {
+      let n = nums.pos()
+      if n.len() == 1 {
+        [Chapter #numbering("1", n.at(0))]
+      } else if n.len() >= 2 {
+        [Chapter #numbering("1", n.at(0)), Section #numbering("1.1.1.1", ..n.slice(1))]
+      }
+    }
+
+    link(
+      el.location(),
+      numbering(num, ..counter(heading).at(el.location())),
+    )
+  }
+
 
   // Level 1: Chapter
   show heading.where(level: 1): set heading(supplement: none)
