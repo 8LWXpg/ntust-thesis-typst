@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.1]
+
+- Removed copyright from.
+
 ## [1.1.0]
 
 - Improve reference formatting.

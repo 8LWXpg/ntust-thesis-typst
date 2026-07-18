@@ -21,8 +21,6 @@
   recommendation-form: none,
   // Committee approval form (image)
   committee-form: none,
-  // Copyright form (image)
-  copyright-form: none,
   // Body
   body,
 ) = {
@@ -118,7 +116,6 @@
       numbering(num, ..counter(heading).at(el.location())),
     )
   }
-
 
   // Level 1: Chapter
   show heading.where(level: 1): set heading(supplement: none)
@@ -347,16 +344,4 @@
     )
     references
   }
-
-  // Copyright form placeholder
-  heading(level: 1, numbering: none)[#l.copyright-form]
-  v(1fr)
-  if copyright-form != none {
-    align(center, copyright-form)
-  } else {
-    align(center, text(fill: luma(180), size: 14pt)[
-      （此頁請放入已簽名之授權書 / Insert signed letter of authority here）
-    ])
-  }
-  v(1fr)
 }
