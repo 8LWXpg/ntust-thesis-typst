@@ -7,7 +7,7 @@
 Create a new project using this template:
 
 ```shell
-typst init @preview/ntust-thesis-unofficial:1.1.0 my-thesis
+typst init @preview/ntust-thesis-unofficial:1.1.1 my-thesis
 ```
 
 Move into the project directory:
@@ -52,7 +52,7 @@ There are no clear terms regarding the distribution of the logo, so it's not inc
 
 ## Preview
 
-[main.pdf](https://github.com/8LWXpg/ntust-thesis-unofficial-typst/blob/v1.1.0/build/main.pdf)
+[main.pdf](https://github.com/8LWXpg/ntust-thesis-unofficial-typst/blob/v1.1.1/build/main.pdf)
 
 ## Official NTUST Thesis Format
 
