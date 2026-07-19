@@ -29,6 +29,7 @@
   show: show-cn-fakebold
   // Language labels
   let l = get-labels(lang)
+  let in-appendix = state("in-appendix", false)
 
   // Document metadata
   set document(
@@ -58,11 +59,16 @@
     justify: true,
   )
 
+  show table.cell: set par(justify: false)
+
   // Heading configuration
   // Language-dependent heading numbering:
-  //   zh: 第一章 / 一、 / （一） / 1. / (1)
-  //   en: Chapter 1 / 1. / 1.1. / 1.1.1 / 1.1.1.1
+  //   zh: 第一章 / 一、 / （一） / 1. / (1)   (附錄A / 附錄B ... in appendix)
+  //   en: Chapter 1 / 1. / 1.1. / 1.1.1 / 1.1.1.1   (Appendix A / B ... in appendix)
   // This numbering function is also used by outline() for ToC entries.
+  // `in-appendix` is flipped to true right before the appendix content is
+  // rendered (see bottom of this function), which switches level-1 headings
+  // from "Chapter N" / "第一章" to "Appendix A" / "附錄A" style.
   set heading(numbering: if lang == "zh" {
     (..nums) => {
       let n = nums.pos()
@@ -94,7 +100,9 @@
     let el = it.element
     if el == none or el.func() != heading { return it }
     if el.level == 1 { return it }
-    let num = (..nums) => if lang == "zh" {
+    let num = (..nums) => if in-appendix.get() {
+      l.appendix
+    } else if lang == "zh" {
       let n = nums.pos()
       if n.len() == 1 {
         numbering("第一章", ..n)
@@ -175,26 +183,29 @@
     it.body
   }
 
-  // Figure & Table numbering (chapter-relative: e.g. "1-2")
+  // Figure & Table numbering (chapter-relative: e.g. "1-2", or "A-2" in appendix)
   show figure.where(kind: image): set figure(
     numbering: n => {
       let c = counter(heading.where(level: 1)).get().first(default: 0)
-      [#c\-#n]
+      let label = if in-appendix.get() { numbering("A", c) } else { str(c) }
+      [#label\-#n]
     },
   )
 
   show figure.where(kind: table): set figure(
     numbering: n => {
       let c = counter(heading.where(level: 1)).get().first(default: 0)
-      [#c\-#n]
+      let label = if in-appendix.get() { numbering("A", c) } else { str(c) }
+      [#label\-#n]
     },
   )
 
-  // Equation numbering: (chapter-n)
+  // Equation numbering: (chapter-n), or (A-n) in appendix
   set math.equation(
     numbering: n => {
       let c = counter(heading.where(level: 1)).get().first(default: 0)
-      [#c\-#n]
+      let label = if in-appendix.get() { numbering("A", c) } else { str(c) }
+      [#label\-#n]
     },
   )
 
@@ -348,6 +359,9 @@
   }
 
   if appendix != none {
+    counter(heading).update(0)
+    counter(heading.where(level: 1)).update(1)
+    in-appendix.update(true)
     heading(level: 1, numbering: none, l.appendix)
     appendix
   }
