@@ -22,6 +22,7 @@
   ),
   acknowledgement: include "frontpages/ackn.typ",
   references: bibliography("cite.bib"),
+  appendix: include "frontpages/appendix.typ",
   // logo: image("logo.png"), // 放入校徽圖片
   // fonts: ("Times New Roman", "DFKai-SB"), // 使用 Window 自帶的字體
   // recommendation-form: image("figures/img.png"), // 放入推薦信圖片

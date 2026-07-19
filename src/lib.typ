@@ -13,6 +13,8 @@
   acknowledgement: none,
   // Bibliography (bibliography)
   references: none,
+  // Appendix
+  appendix: none,
   // Logo (image)
   logo: none,
   // Fonts
@@ -343,5 +345,10 @@
       style: "ieee",
     )
     references
+  }
+
+  if appendix != none {
+    heading(level: 1, numbering: none, l.appendix)
+    appendix
   }
 }
