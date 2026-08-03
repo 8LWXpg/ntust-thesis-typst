@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.0]
+
+- Changed appearance of `recommandation-form` and `committee-form` to full page.
+
 ## [1.2.0]
 
 - Removed copyright form.

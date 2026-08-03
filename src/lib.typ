@@ -279,33 +279,34 @@
   set page(numbering: "I")
   counter(page).update(1)
 
-  // Recommendation letter placeholder
-  {
-    heading(level: 1, numbering: none)[#l.recommendation-form]
+  // Signed-form pages. When the scanned form is supplied it is laid out
+  // full-bleed on its own page without a heading; otherwise a titled
+  // placeholder page is emitted instead.
+  let form-page(title, form, hint) = if form != none {
+    page(margin: 0pt, header: none, footer: none, numbering: none, {
+      set image(width: 100%, height: 100%, fit: "contain")
+      form
+    })
+  } else {
+    heading(level: 1, numbering: none)[#title]
     v(1fr)
-    if recommendation-form != none {
-      align(center, recommendation-form)
-    } else {
-      align(center, text(fill: luma(180), size: 14pt)[
-        （此頁請放入已簽名之推薦書 / Insert signed recommendation letter here）
-      ])
-    }
+    align(center, text(fill: luma(180), size: 14pt, hint))
     v(1fr)
   }
 
-  // Committee approval placeholder
-  {
-    heading(level: 1, numbering: none)[#l.committee-form]
-    v(1fr)
-    if committee-form != none {
-      align(center, committee-form)
-    } else {
-      align(center, text(fill: luma(180), size: 14pt)[
-        （此頁請放入已簽名之審定書 / Insert signed qualification form here）
-      ])
-    }
-    v(1fr)
-  }
+  // Recommendation letter
+  form-page(
+    l.recommendation-form,
+    recommendation-form,
+    [（此頁請放入已簽名之推薦書 / Insert signed recommendation letter here）],
+  )
+
+  // Committee approval
+  form-page(
+    l.committee-form,
+    committee-form,
+    [（此頁請放入已簽名之審定書 / Insert signed qualification form here）],
+  )
 
   // Chinese abstract
   if abstracts.at("zh", default: none) != none {

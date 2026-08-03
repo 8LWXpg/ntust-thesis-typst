@@ -7,7 +7,7 @@
 Create a new project using this template:
 
 ```shell
-typst init @preview/ntust-thesis-unofficial:1.2.0 my-thesis
+typst init @preview/ntust-thesis-unofficial:1.3.0 my-thesis
 ```
 
 Move into the project directory:
@@ -52,12 +52,12 @@ There are no clear terms regarding the distribution of the logo, so it's not inc
 
 ## Preview
 
-[main.pdf](https://github.com/8LWXpg/ntust-thesis-unofficial-typst/blob/v1.2.0/build/main.pdf)
+[main.pdf](https://github.com/8LWXpg/ntust-thesis-unofficial-typst/blob/v1.3.0/build/main.pdf)
 
 ## Official NTUST Thesis Format
 
 - [論文上傳步驟說明](https://etheses.lib.ntust.edu.tw/zh-hant/help/aboutedit/)
-- [國立臺灣科技大學學位論文撰寫、編排規則及注意事項（112.03.07）](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
+- [國立臺灣科技大學學位論文撰寫、編排規則及注意事項（1.3.03.07）](https://etheses.lib.ntust.edu.tw/media/download/ed6370c8-7c81-11ee-b999-0242ac1f0806.pdf)
 - [國立臺灣科技大學學位論文撰寫、編排規則及注意事項（113.12.24）](https://www.academic.ntust.edu.tw/var/file/48/1048/img/2554/604024536.pdf)
 
 ## Notice
